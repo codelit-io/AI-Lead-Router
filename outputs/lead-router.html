@@ -194,11 +194,13 @@
   }
   function parseCategory(text) {
     // Validate only; category selection belongs entirely to the model.
-    if (typeof text !== 'string' || !/^\s*\{\s*"category"\s*:\s*"(?:Sales|Support|Enterprise|Other)"\s*\}\s*$/.test(text)) {
+    // Require one string pair before decoding, so duplicate keys cannot be hidden by JSON.parse.
+    if (typeof text !== 'string' || !/^\s*\{\s*"(?:[^"\\\x00-\x1f]|\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4}))*"\s*:\s*"(?:[^"\\\x00-\x1f]|\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4}))*"\s*\}\s*$/.test(text)) {
       throw problem('Model output is not exactly one valid category field.');
     }
     const value = JSON.parse(text);
-    if (Object.keys(value).length !== 1 || !categories.includes(value.category)) throw problem('Model category validation failed.');
+    const keys = Object.keys(value);
+    if (keys.length !== 1 || keys[0] !== 'category' || !categories.includes(value.category)) throw problem('Model category validation failed.');
     return Object.freeze({ category: value.category });
   }
   function validateModel(data, run) {
