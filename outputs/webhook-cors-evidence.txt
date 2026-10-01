@@ -1,0 +1,47 @@
+Webhook CORS before/after evidence
+
+BEFORE - independently observed in the existing webhook.site browser tab:
+  Add CORS headers: disabled (unchecked).
+  Inbox: earlier GET plus one OPTIONS; no POST.
+  Preflight receiver ID: 49bd6fd8-161a-4cbf-b0b6-e35a824c8105
+  Access-Control-Request-Method: POST
+  Access-Control-Request-Headers: content-type,x-request-id
+  Origin: null
+  Request body: empty (normal for preflight).
+  Intended POST content type in the unchanged router: application/json.
+  No category JSON or client request ID had arrived in a POST.
+
+FIX - receiver configuration only:
+  Enabled Add CORS headers on the same existing webhook URL.
+  Saved; webhook.site displayed URL updated!
+  Reopened Edit URL and independently confirmed Add CORS headers remained checked.
+  Default response status remains 200; response content type remains text/html;
+  timeout remains 0. These response settings are distinct from the POST content type.
+  No HTML, model-flow or classification-logic changes.
+  No proxy, no-cors mode, browser-security bypass, or automatic resend.
+
+AFTER - one user-operated synthetic browser rerun, independently matched in receiver UI:
+  Browser receipt: gpt-4.1-mini; OpenAI HTTP 200; completed; local validation passed.
+  Browser webhook acknowledgment: HTTP 200.
+  Browser total elapsed: 2.66 seconds.
+  Browser OpenAI response ID: resp_0dd0a9f921f9cb19016abec9d9b48487d197cd26a2e740d90c
+  Browser tokens: 181 input, 6 output.
+  A new OPTIONS preflight (receiver ID prefix b3bfb) is followed by a POST.
+  POST received October 1, 2026, at 3:00:11 PM America/Denver.
+  Receiver POST ID: 593849ba-a79a-4622-aebc-7e6aff81b1e2
+  Received method: POST
+  Received Content-Type: application/json
+  Received Origin: null
+  Received Content-Length: 25
+  Received X-Request-ID: b173799d-c7bc-466c-a03e-68fd41205998
+  Received JSON: {"category":"Enterprise"}
+  The received X-Request-ID exactly matches the client Request ID in the browser receipt.
+
+CONCLUSION:
+  The same browser flow now completes and its category POST has a matching receiver receipt.
+  Only the existing receiver's Add CORS headers setting changed, disabled -> enabled.
+  Model flow and classification logic remained unchanged. No browser-security bypass.
+  One manual rerun; no automatic or agent-generated inference/webhook retry.
+  Budget counters now: OpenAI attempts 3/5; webhook dispatch attempts 3/4.
+  Runtime credentials and the exact live URL remain omitted from source and this file.
+  No commits or pushes. Work stopped after verification.

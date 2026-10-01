@@ -1,0 +1,36 @@
+Lead router live evidence - October 1, 2026
+Historical failed-delivery snapshot, before the receiver CORS fix. Final live verification is recorded in webhook-cors-evidence.txt.
+
+OpenAI result (receipt supplied by the user from the real Chrome run):
+  Requested model: gpt-4.1-mini
+  HTTP 200; completed; local validation passed
+  Category JSON: {"category":"Enterprise"}
+  Client Request ID: db1b90c1-9fd1-4748-848f-2f3d3231f7b0
+  OpenAI response ID: resp_08f88016517a2a64016abec7be7b9c87d1aa623ea08ad584d1
+  Usage: 181 input tokens, 6 output tokens
+  Total elapsed in the submitted receipt: 3.21 seconds
+
+Webhook result (independently observed in the existing webhook.site browser tab):
+  Inbox contains an OPTIONS preflight and an earlier GET, with no POST.
+  OPTIONS received at October 1, 2026, 2:51:12 PM America/Denver.
+  Receiver request ID for OPTIONS: 49bd6fd8-161a-4cbf-b0b6-e35a824c8105
+  Access-Control-Request-Method: POST
+  Access-Control-Request-Headers: content-type,x-request-id
+  Origin: null
+  Body: empty
+  The category JSON and client Request ID were not received in a POST.
+
+Conclusion:
+  User-provided evidence supports browser-to-OpenAI success.
+  A matching webhook category POST is not verified.
+  The observed preflight without a POST is consistent with CORS/preflight rejection;
+  its exact HTTP response status/headers were not available from the inbox inspection.
+  The app correctly reports uncertainty rather than claiming confirmed delivery.
+
+Budget counters supplied by user: OpenAI attempts 2/5; webhook dispatch attempts 2/4.
+Webhook counters reserve attempts conservatively; a dispatch attempt does not prove
+that the browser transmitted the POST following preflight.
+
+Verification performed no additional inference calls or webhook sends.
+No retries, browser-security bypasses, app edits, commits or pushes were performed.
+Runtime credentials and the exact live URL are intentionally omitted from this file.

@@ -1,0 +1,29 @@
+# Scratch code and generated review artifacts
+/work/
+/outputs/*.diff
+/outputs/*.patch
+
+# Credentials and runtime configuration
+.env
+.env.*
+*.pem
+*.key
+secrets/
+credentials/
+
+# Exercise documents, recordings, and captured browser/network data
+*.pdf
+*.PDF
+*.mp4
+*.mov
+*.m4v
+*.webm
+*.mp3
+*.wav
+recordings/
+screenshots/
+captures/
+traces/
+*.har
+*.log
+.DS_Store

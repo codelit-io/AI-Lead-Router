@@ -1,0 +1,23 @@
+Lead router verification
+Historical simulated-test snapshot, before the manual live run. Final live verification is recorded in webhook-cors-evidence.txt.
+All tests below use simulated fetches and synthetic placeholders. They do not prove real browser access or webhook delivery.
+
+PASS Valid model JSON -> one category-only POST with matching X-Request-ID and no credential forwarding
+PASS Both supplied examples remain unchanged in model input; JavaScript never classifies them
+PASS Invalid category, missing/extra/duplicate keys, arrays, fenced JSON and HTML are blocked without webhook
+PASS Refusal, incomplete response, wrong model and malformed envelope JSON stop without webhook
+PASS OpenAI HTTP 400/401/403/404/429/500 and network failures stop without retry or webhook
+PASS Blank/overlong messages, invalid runtime URL/key/counts and exhausted budgets make zero requests
+PASS Double submit blocked; message, credentials, target and ID are frozen despite input mutation
+PASS Model timeout ends waiting at 20 seconds; ignored abort/late success cannot trigger webhook
+PASS Slow OpenAI response body is bounded by the same 20-second deadline
+PASS Webhook HTTP errors or network failures preserve category and report uncertain delivery; no retries
+PASS Total waiting, including stalled webhook response reading, ends at 30 seconds
+PASS Oversize model/webhook bodies are bounded; webhook 204 needs no response body
+PASS Page exit clears private fields, aborts work and prevents late POST or UI updates
+PASS Static privacy: no storage/logging, external scripts, embedded runtime key/URL, unsafe rendering or auto-retry
+
+14 behavioral/static test groups passed.
+Live OpenAI attempts made by these tests: 0
+Live webhook POSTs made by these tests: 0
+Real browser request and matching webhook receipt: pending manual run.
